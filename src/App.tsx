@@ -1,24 +1,53 @@
-import { CalendarDotsIcon} from "@phosphor-icons/react"
+import { PlusCircleIcon } from "@phosphor-icons/react";
+import { useState } from "react";
+import { Footer, Header } from "./headAndFooter";
 
-export const App=()=> {
+
+
+export const App = () => {
+
+const [addTask, setaddTask] = useState("");
+  const [listTasks, setListTasks] = useState<string[]>([]);
+
+  function handleAddTask(event: React.FormEvent) {
+    event.preventDefault();
+    if (addTask.trim() === "") {return}else{
+    setListTasks([...listTasks, addTask]);
+    setaddTask("");
+  }}
   return (
     <>
-    <div className="flex flex-col p-auto h-screen">
-        <header className="px-4 flex justify-between h-18 bg-gradient-to-br from-fuchsia-900 via-fuchsia-500 to-fuchsia-400 text-center">
-<div className="w-20"><img src="/task.png" alt="Logo" /></div>
-<div className="py-6 text-purple-950 font-bold font-Apple Color Emoji">My Task Manager</div>
-<div className="py-7 text-purple-950"><CalendarDotsIcon size={20} /></div>
-        </header>
-        <main className="flex-1 px-2 py-2 bg-fuchsia-200 ">
-<p className="text-purple-950"> Aqui é o corpo</p>
-        </main>
-        <footer className="flex justify-between px-4 py-4 h-12 bg-fuchsia-900 text-xs">
-<p className="text-black">&copy;{new Date().getFullYear()} Gerenciador de Tarefas </p>
-<p className="text-black">Criado por Esperança Munlela</p>
-        </footer>
-        </div>
-    </>
-  )
-}
+      <div className="flex flex-col p-auto h-screen">
+        <Header/>
 
- 
+        <main className="flex flex-col flex-1 pl-12 pr-4 py-2 bg-fuchsia-200 items-center">
+                <p className="text-purple-950">
+              Que tarefa temos a cumprir?
+            </p>
+          <form onSubmit={handleAddTask}  className="flex ">
+            <input
+              type="text"
+             value={addTask}
+            onChange={(e) => setaddTask(e.target.value)}
+              placeholder="Adicione aqui uma task..."
+              className=" h-5 w-50 border rounded-sm text-purple-950 bg-fuchsia-50 text-xs"
+            />
+            <button type="submit" >
+            <PlusCircleIcon size={20} weight="duotone" className="-ml-5 text-purple-950 cursor-pointer" />
+            </button>
+          </form>
+
+          <div className="w-75 max-w-md flex flex-col gap-1 mt-3">
+          {listTasks.map((task, indice) => (
+            <div key={indice} className="bg-fuchsia-100 text-purple-950 text-xs p-2 rounded">
+              {task}
+            </div>
+          ))}
+        </div>
+        </main>
+        
+ <Footer/>
+      </div>
+    </>
+  );
+};
