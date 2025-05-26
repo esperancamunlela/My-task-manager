@@ -5,6 +5,9 @@ import { Footer, Header } from "./headAndFooter";
 export const App = () => {
   const [addTask, setaddTask] = useState("");
   const [listTasks, setListTasks] = useState<string[]>([]);
+   const [checked, setChecked] = useState(false);
+
+
 
   function handleAddTask(event: React.FormEvent) {
     event.preventDefault();
@@ -14,6 +17,13 @@ export const App = () => {
       setListTasks([...listTasks, addTask]);
       setaddTask("");
     }
+  }
+
+  function taskDone(){
+    const cartao = document.getElementById("card")
+    const novoEstilo = '"bg-green-200 text-purple-950 text-xs p-2 rounded hover:bg-fuchsia-400 flex justify-between"'
+    cartao?.setAttribute("classname",novoEstilo)
+  setChecked(!checked);
   }
 
   function deleteTask(indice: number) {
@@ -44,23 +54,32 @@ export const App = () => {
               />
             </button>
           </form>
-          <div className="w-75 max-w-md flex flex-col gap-1 mt-3 ">
+          <div  className="w-75 max-w-md flex flex-col gap-1 mt-3 ">
             {listTasks.map((task, indice) => (
               <div
                 key={indice}
+                id="card"
                 className="bg-fuchsia-100 text-purple-950 text-xs p-2 rounded hover:bg-fuchsia-400 flex justify-between"
               >
                 <div className="flex flex-col">
                   {task}
-                <div className="text-[6px] flex flex-col">{new Date().toLocaleDateString("pt-pt")}{new Date().toLocaleTimeString("pt-mz")}</div>
+                  <div className="text-[6px] flex flex-col">
+                    {new Date().toLocaleDateString("pt-pt")}
+                    {new Date().toLocaleTimeString("pt-mz")}
+                  </div>
                 </div>
 
-                <button
+                <div className="pt-2">
+                  <button
                   className="cursor-pointer hover:text-red-800 font-bold"
                   onClick={() => deleteTask(indice)}
                 >
                   <TrashSimpleIcon size={16} weight="bold" />
                 </button>
+                <input 
+                type="checkbox" 
+                onClick={()=>taskDone()}/>
+                </div>
               </div>
             ))}
           </div>
