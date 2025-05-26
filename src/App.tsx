@@ -34,7 +34,7 @@ export const App = () => {
               value={addTask}
               onChange={(e) => setaddTask(e.target.value)}
               placeholder="Adicione aqui uma task..."
-              className=" h-5 w-50 border rounded-sm text-purple-950 bg-fuchsia-50 text-xs "
+              className=" h-5 w-50 pl-1 border rounded-sm text-purple-950 bg-fuchsia-50 text-xs "
             />
             <button type="submit">
               <PlusCircleIcon
@@ -50,7 +50,11 @@ export const App = () => {
                 key={indice}
                 className="bg-fuchsia-100 text-purple-950 text-xs p-2 rounded hover:bg-fuchsia-400 flex justify-between"
               >
-                {task}
+                <div className="flex flex-col">
+                  {task}
+                <div className="text-[6px] flex flex-col">{new Date().toLocaleDateString("pt-pt")}{new Date().toLocaleTimeString("pt-mz")}</div>
+                </div>
+
                 <button
                   className="cursor-pointer hover:text-red-800 font-bold"
                   onClick={() => deleteTask(indice)}
